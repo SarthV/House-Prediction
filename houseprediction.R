@@ -60,15 +60,13 @@ glm_house$coefficients
 library('randomForest')
 ?randomForest
 names(train)
-set.seed(1738)
+set.seed(100)
 train_y = train[, "median_house_value"]
 train_x = train[, names(train)!= "median_house_value"]
 rf_model = randomForest(train_x, y = train_y, data = train, ntree = 500, importance = TRUE)
 names(rf_model)
 rf_model$importance
-oob_prediction = predict(rf_model) #leaving out a data source forces OOB predictions
-#you may have noticed that this is avaliable using the $mse in the model options.
-#but this way we learn stuff!
+oob_prediction = predict(rf_model) 
 train_mse = mean(as.numeric((oob_prediction - train_y)^2))
 oob_rmse = sqrt(train_mse)
 oob_rmse
